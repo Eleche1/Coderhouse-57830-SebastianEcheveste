@@ -1,0 +1,118 @@
+from django.shortcuts import render, redirect
+from .models import Cliente, Cancha, Reserva
+from .forms import ClienteForm, CanchaForm, ReservaForm
+
+
+def index(request):
+    return render(request, 'reservas/index.html')
+
+def cliente_list(request):
+    query = Cliente.objects.all()
+    context = {"object_list": query}
+    return render(request, 'reservas/cliente_list.html', context)
+
+def cancha_list(request):
+    query = Cancha.objects.all()
+    context = {"object_list": query}
+    return render(request, 'reservas/cancha_list.html', context)
+
+def reserva_list(request):
+    query = Reserva.objects.all()
+    context = {"object_list": query}
+    return render(request, 'reservas/reserva_list.html', context)
+
+def cliente_create(request):
+    if request.method == 'GET':
+        form = ClienteForm()
+    elif request.method == 'POST':
+        form = ClienteForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('cliente_list')
+    return render(request, 'reservas/cliente_create.html', {'form': form})
+
+def cancha_create(request):  
+    """
+    View para crear una cancha. Utiliza el formulario CanchaForm.
+
+    Si el request es GET, se crea un formulario vacio y se renderiza el
+    template cancha_create.html con el formulario.
+
+    Si el request es POST, se crea un formulario con los datos del
+    request y se comprueba su validez. Si es válido, se guarda el formulario
+    y se redirige a la lista de canchas. Si no es válido, se renderiza de
+    nuevo el template con el formulario y los errores.
+    """
+
+    if request.method == 'GET':
+        form = CanchaForm()
+    elif request.method == 'POST':  # Cambiado a elif
+        form = CanchaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('cancha_list')
+    return render(request, 'reservas/cancha_create.html', {'form': form})
+
+def reserva_create(request):
+    if request.method == 'GET':
+        form = ReservaForm()
+    elif request.method == 'POST':
+        form = ReservaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('reserva_list')
+    return render(request, 'reservas/reserva_create.html', {'form': form})
+
+def cliente_update(request, pk):
+    cliente = Cliente.objects.get(pk=pk)
+    if request.method == 'POST':
+        form = ClienteForm(request.POST, instance=cliente)
+        if form.is_valid():
+            form.save()
+            return redirect('cliente_list')
+    else:
+        form = ClienteForm(instance=cliente)
+    return render(request, 'reservas/cliente_create.html', {'form': form})
+
+def cliente_delete(request, pk):
+    cliente = Cliente.objects.get(pk=pk)
+    if request.method == 'POST':
+        cliente.delete()
+        return redirect('cliente_list')
+    return render(request, 'reservas/cliente_confirm_delete.html', {'object': cliente})
+
+def cancha_update(request, pk):
+    cancha = Cancha.objects.get(pk=pk)
+    if request.method == 'POST':
+        form = CanchaForm(request.POST, instance=cancha)
+        if form.is_valid():
+            form.save()
+            return redirect('cancha_list')
+    else:
+        form = CanchaForm(instance=cancha)
+    return render(request, 'reservas/cancha_create.html', {'form': form})
+
+def cancha_delete(request, pk):
+    cancha = Cancha.objects.get(pk=pk)
+    if request.method == 'POST':
+        cancha.delete()
+        return redirect('cancha_list')
+    return render(request, 'reservas/cancha_confirm_delete.html', {'object': cancha})
+
+def reserva_update(request, pk):
+    reserva = Reserva.objects.get(pk=pk)
+    if request.method == 'POST':
+        form = ReservaForm(request.POST, instance=reserva)
+        if form.is_valid():
+            form.save()
+            return redirect('reserva_list')
+    else:
+        form = ReservaForm(instance=reserva)
+    return render(request, 'reservas/reserva_create.html', {'form': form})
+
+def reserva_delete(request, pk):
+    reserva = Reserva.objects.get(pk=pk)
+    if request.method == 'POST':
+        reserva.delete()
+        return redirect('reserva_list')
+    return render(request, 'reservas/reserva_confirm_delete.html', {'object': reserva})

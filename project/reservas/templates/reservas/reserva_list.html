@@ -1,0 +1,50 @@
+{% extends "reservas/base.html" %}
+
+{% block header %}
+Reservas: lista
+{% endblock header %}
+
+{% block content %}
+<button style="background-color: #007bff; color: white; border: none; padding: 10px 20px; cursor: pointer;">
+    <a href="{% url 'reserva_create' %}" style="color: white; text-decoration: none;">Crear reserva</a>
+</button>
+
+<table style="width: 100%; margin-top: 20px; border-collapse: collapse;">
+    <thead>
+        <tr>
+            <th>Cancha</th>
+            <th>Cliente</th>
+            <th>Celular</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Duración</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for object in object_list %}
+            <tr>
+                <td>{{ object.cancha.nombre }} - {{object.cancha.tipo}} </td>
+                <td>{{ object.cliente.nombre }} {{ object.cliente.apellido }} </td>
+                <td>{{ object.cliente.celular }}</td>
+                <td>{{ object.fecha_reserva }}</td>
+                <td>{{ object.hora_inicio }}</td>
+                <td>{{ object.duracion }}</td>
+                <td>
+                    <a href="{% url 'reserva_update' object.id %}">
+                        <button style="background-color: #ffc107; margin-right: 10px;">Editar</button>
+                    </a>
+                    <form action="{% url 'reserva_delete' object.id %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" style="background-color: #dc3545;" onclick="return confirm('¿Estás seguro de que quieres eliminar esta reserva?');">Borrar</button>
+                    </form>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="6">No hay reservas</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}

@@ -1,0 +1,42 @@
+{% extends "reservas/base.html" %}
+
+{% block header %}
+Canchas: lista
+{% endblock header %}
+
+{% block content %}
+<button style="background-color: #007bff; color: white; border: none; padding: 10px 20px; cursor: pointer;">
+    <a href="{% url 'cancha_create' %}" style="color: white; text-decoration: none;">Crear cancha</a>
+</button>
+
+<table style="width: 100%; margin-top: 20px; border-collapse: collapse;">
+    <thead>
+        <tr>
+            <th>Cancha</th>
+            <th>Tipo</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for object in object_list %}
+            <tr>
+                <td>{{ object.nombre }}</td>
+                <td>{{ object.tipo }}</td>
+                <td>
+                    <a href="{% url 'cancha_update' object.id %}">
+                        <button style="background-color: #ffc107; margin-right: 10px;">Editar</button>
+                    </a>
+                    <form action="{% url 'cancha_delete' object.id %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" style="background-color: #dc3545;" onclick="return confirm('¿Estás seguro de que quieres eliminar esta cancha?');">Borrar</button>
+                    </form>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="2">No hay canchas</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}

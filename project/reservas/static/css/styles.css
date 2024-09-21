@@ -1,0 +1,19 @@
+body {
+    background-image: url("/static/img/fondo.jpg"); /* URL relativa a tu carpeta estática */
+    background-size: cover;  /* La imagen cubrirá todo el fondo */
+    background-position: center;  /* Centrar la imagen */
+    background-repeat: no-repeat;  /* No repetir la imagen */
+    height: 100vh;  /* Ajusta la altura del fondo */
+    margin: 0;
+    font-family: Arial, sans-serif;  /* Opcional: cambia la fuente */
+}
+
+/* Si necesitas ajustar el contenido */
+.main-content {
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semi-transparente */
+    padding: 20px;
+    border-radius: 10px;
+    margin: 50px auto;
+    width: 80%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para dar efecto de elevación */
+}

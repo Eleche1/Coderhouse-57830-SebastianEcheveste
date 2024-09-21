@@ -1,0 +1,14 @@
+{% extends "reservas/base.html" %}
+
+{% block header %}
+    Confirmar Eliminación de Cliente
+{% endblock header %}
+
+{% block content %}
+    <h2>¿Estás seguro de que deseas eliminar al cliente "{{ object.nombre }} {{ object.apellido }}"?</h2>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Confirmar</button>
+        <a href="{% url 'cliente_list' %}">Cancelar</a>
+    </form>
+{% endblock content %}
