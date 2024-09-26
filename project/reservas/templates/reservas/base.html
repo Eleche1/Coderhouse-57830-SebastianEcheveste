@@ -1,9 +1,12 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis Reservas</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -69,8 +72,10 @@
 </header>
 
 <main style="text-align: center;">
-    {% block content %}
-    {% endblock %}
+    <div class="main-content"> <!-- Contenedor para el fondo blanco -->
+        {% block content %}
+        {% endblock %}
+    </div>
 </main>
 
 </body>

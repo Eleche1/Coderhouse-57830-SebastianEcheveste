@@ -39,8 +39,10 @@ class ReservaForm(forms.ModelForm):
         model = Reserva
         fields = '__all__'
         widgets = {
-            "fecha_reserva": forms.DateInput(attrs={"type": "date"}),
-            # No es necesario definir un widget para hora_inicio aquí
+            "fecha_reserva": forms.DateInput(attrs={
+                "type": "date",
+                "min": datetime.now().date().isoformat()  # Solo permite fechas desde hoy
+            }),
         }
 
     def clean(self):
