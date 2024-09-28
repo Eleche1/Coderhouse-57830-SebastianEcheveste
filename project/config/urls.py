@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from reservas import views
+from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,4 +34,9 @@ urlpatterns = [
     path("cancha/<int:pk>/eliminar/", views.cancha_delete, name="cancha_delete"),
     path("reserva/<int:pk>/editar/", views.reserva_update, name="reserva_update"),
     path("reserva/<int:pk>/eliminar/", views.reserva_delete, name="reserva_delete"),
+    path("login/", views.user_login, name="login"),
+    path("register/", views.user_register, name="register"),
+    path("profile/", views.profile, name="profile"),
+    path("logout/", LogoutView.as_view(), name="logout"),
+    path("about/", views.about, name="about"),
 ]

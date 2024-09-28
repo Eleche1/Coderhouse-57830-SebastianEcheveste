@@ -1,6 +1,11 @@
 from django.shortcuts import render, redirect
 from .models import Cliente, Cancha, Reserva
 from .forms import ClienteForm, CanchaForm, ReservaForm
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.forms import AuthenticationForm
+from .forms import CustomUserCreationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 
 def index(request):
@@ -116,3 +121,51 @@ def reserva_delete(request, pk):
         reserva.delete()
         return redirect('reserva_list')
     return render(request, 'reservas/reserva_confirm_delete.html', {'object': reserva})
+
+def user_register(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('index')  # Cambia esto a la URL de tu elección
+    else:
+        form = CustomUserCreationForm()
+    return render(request, 'reservas/register.html', {'form': form})
+
+def user_login(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('index')
+            else:
+                return render(request, 'reservas/login.html', {'form': form, 'error': 'Credenciales inválidas'})
+    else:
+        form = AuthenticationForm()
+    return render(request, 'reservas/login.html', {'form': form})
+
+@login_required
+def profile(request):
+
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')  # Redirigir a la página de perfil
+    else:
+        form = CustomUserCreationForm(instance=request.user)
+    return render(request, 'reservas/profile.html', {'form': form})
+
+def custom_logout_view(request):
+    if request.method == "POST":
+        logout(request)
+        return redirect('index')  # Redirige a la página de inicio después de logout
+    return redirect('index')  # Si intentan un método GET, también los redirige
+
+def about(request):
+    return render(request, 'reservas/about.html')

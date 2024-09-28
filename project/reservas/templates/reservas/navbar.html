@@ -1,4 +1,24 @@
-<a href="{% url 'index' %}" class="btn">Home</a>
-<a href="{% url 'cliente_list' %}" class="btn">Clientes</a>
-<a href="{% url 'cancha_list' %}" class="btn">Canchas</a>
-<a href="{% url 'reserva_list' %}" class="btn">Reservas</a>
+<div class="navbar">
+    <!-- Navegación principal -->
+    <div class="nav-links">
+        <a href="{% url 'index' %}" class="btn">Home</a>
+        <a href="{% url 'cliente_list' %}" class="btn">Clientes</a>
+        <a href="{% url 'cancha_list' %}" class="btn">Canchas</a>
+        <a href="{% url 'reserva_list' %}" class="btn">Reservas</a>
+        <a href="{% url 'about' %}" class="btn">About</a>
+    </div>
+
+    <!-- Gestión de usuario -->
+    <div class="user-links" style="float: right;"> <!-- Colocar a la derecha -->
+        {% if request.user.is_authenticated %}
+            <span>Bienvenido, {{ request.user.username }}!</span>
+            <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn">Logout</button>
+            </form>
+        {% else %}
+            <a href="{% url 'login' %}" class="btn">Login</a>
+            <a href="{% url 'register' %}" class="btn">Register</a>
+        {% endif %}
+    </div>
+</div>

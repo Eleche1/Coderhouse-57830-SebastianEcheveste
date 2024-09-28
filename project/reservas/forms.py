@@ -1,4 +1,6 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 from .models import Cliente, Cancha, Reserva
 from datetime import timedelta, datetime, time
 
@@ -46,6 +48,7 @@ class ReservaForm(forms.ModelForm):
         }
 
     def clean(self):
+
         cleaned_data = super().clean()
         fecha_reserva = cleaned_data.get('fecha_reserva')
         hora_inicio = cleaned_data.get('hora_inicio')
@@ -62,3 +65,8 @@ class ReservaForm(forms.ModelForm):
                 raise forms.ValidationError("La fecha y hora seleccionadas no pueden ser anteriores a la fecha y hora actuales.")
 
         return cleaned_data
+    
+class CustomUserCreationForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password1', 'password2')

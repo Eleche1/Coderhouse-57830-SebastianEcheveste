@@ -1,0 +1,13 @@
+{%extends "reservas/base.html"%}
+
+{% block header %}
+<h2>Iniciar sesión</h2>
+<form method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit">Iniciar sesión</button>
+</form>
+{% if error %}
+    <p style="color: red;">{{error}}</p>
+{% endif %}
+{% endblock header %}
