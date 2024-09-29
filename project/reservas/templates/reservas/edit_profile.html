@@ -1,0 +1,11 @@
+{% extends "reservas/base.html" %}
+
+{% block content %}
+  <h2>Editar Perfil</h2>
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Guardar Cambios</button>
+  </form>
+  <a href="{% url 'profile' %}">Volver al perfil</a>
+{% endblock %}

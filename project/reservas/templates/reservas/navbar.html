@@ -1,17 +1,34 @@
+{% load static %}
+
 <div class="navbar">
     <!-- Navegación principal -->
     <div class="nav-links">
         <a href="{% url 'index' %}" class="btn">Home</a>
-        <a href="{% url 'cliente_list' %}" class="btn">Clientes</a>
-        <a href="{% url 'cancha_list' %}" class="btn">Canchas</a>
-        <a href="{% url 'reserva_list' %}" class="btn">Reservas</a>
+        
+        {% if request.user.is_authenticated %}
+            <a href="{% url 'cliente_list' %}" class="btn">Clientes</a>
+            <a href="{% url 'cancha_list' %}" class="btn">Canchas</a>
+            <a href="{% url 'reserva_list' %}" class="btn">Reservas</a>
+        {% endif %}
+        
         <a href="{% url 'about' %}" class="btn">About</a>
     </div>
 
     <!-- Gestión de usuario -->
     <div class="user-links" style="float: right;"> <!-- Colocar a la derecha -->
         {% if request.user.is_authenticated %}
-            <span>Bienvenido, {{ request.user.username }}!</span>
+            <span style="display: flex; align-items: center;">
+                <!-- Imagen de perfil pequeña con enlace a la edición de perfil -->
+                <a href="{% url 'edit_profile' %}" style="display: flex; align-items: center; text-decoration: none; color: black;">
+                    {% if request.user.userprofile.profile_picture %}
+                        <img src="{{ request.user.userprofile.profile_picture.url }}" alt="Foto de perfil" style="border-radius: 50%; width: 30px; height: 30px; margin-right: 5px;">
+                    {% else %}
+                        <!-- Imagen por defecto si el usuario no tiene una foto de perfil -->
+                        <img src="{% static 'images/default_profile.png' %}" alt="Foto de perfil predeterminada" style="border-radius: 50%; width: 30px; height: 30px; margin-right: 5px;">
+                    {% endif %}
+                    Bienvenido, {{ request.user.username }}!
+                </a>
+            </span>
             <form method="post" action="{% url 'logout' %}" style="display: inline;">
                 {% csrf_token %}
                 <button type="submit" class="btn">Logout</button>
@@ -22,3 +39,5 @@
         {% endif %}
     </div>
 </div>
+
+

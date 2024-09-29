@@ -14,6 +14,7 @@ Canchas: lista
         <tr>
             <th>Cancha</th>
             <th>Tipo</th>
+            <th>Precio por hora</th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -22,6 +23,7 @@ Canchas: lista
             <tr>
                 <td>{{ object.nombre }}</td>
                 <td>{{ object.tipo }}</td>
+                <td>{{ object.precio_por_hora }}</td>
                 <td>
                     <a href="{% url 'cancha_update' object.id %}">
                         <button style="background-color: #ffc107; margin-right: 10px;">Editar</button>

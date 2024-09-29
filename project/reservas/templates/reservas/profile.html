@@ -2,9 +2,20 @@
 
 {% block content %}
   <h2>Perfil de Usuario</h2>
-  <form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Guardar Cambios</button>
-  </form>
+
+  <!-- Muestra la información del usuario actual -->
+  <p><strong>Nombre de usuario:</strong> {{ user.username }}</p>
+  <p><strong>Email:</strong> {{ user.email }}</p>
+
+  <!-- Mostrar la imagen de perfil si existe -->
+  {% if user.userprofile.profile_picture %}
+    <p><strong>Foto de perfil:</strong></p>
+    <img src="{{ user.userprofile.profile_picture.url }}" alt="Foto de perfil" style="max-width: 150px; max-height: 150px;">
+  {% else %}
+    <p>No tienes una foto de perfil.</p>
+  {% endif %}
+
+  <!-- Enlace para editar el perfil -->
+  <a href="{% url 'edit_profile' %}">Editar Perfil</a>
+
 {% endblock %}

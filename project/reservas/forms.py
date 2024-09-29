@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Cliente, Cancha, Reserva
+from .models import Cliente, Cancha, Reserva, UserProfile
 from datetime import timedelta, datetime, time
 
 class ClienteForm(forms.ModelForm):
@@ -70,3 +70,8 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'email', 'password1', 'password2')
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['user', 'profile_picture']

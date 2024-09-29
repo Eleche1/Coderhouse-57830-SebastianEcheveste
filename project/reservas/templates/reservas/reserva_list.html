@@ -18,6 +18,8 @@ Reservas: lista
             <th>Fecha</th>
             <th>Hora</th>
             <th>Duración</th>
+            <th>Estado</th>
+            <th>Valor</th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -30,6 +32,16 @@ Reservas: lista
                 <td>{{ object.fecha_reserva }}</td>
                 <td>{{ object.hora_inicio }}</td>
                 <td>{{ object.duracion }}</td>
+                <td>{{ object.estado }}</td>
+                <td>
+                    {% with valor=object.calcular_precio %}
+                    {% if valor %}
+                        {{ valor }}
+                    {% else %}
+                        Sin precio
+                    {% endif %}
+                {% endwith %}
+                </td>
                 <td>
                     <a href="{% url 'reserva_update' object.id %}">
                         <button style="background-color: #ffc107; margin-right: 10px;">Editar</button>

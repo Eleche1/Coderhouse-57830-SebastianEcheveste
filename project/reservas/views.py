@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
-from .models import Cliente, Cancha, Reserva
+from .models import Cliente, Cancha, Reserva, UserProfile
 from .forms import ClienteForm, CanchaForm, ReservaForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, UserProfileForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
@@ -169,3 +169,18 @@ def custom_logout_view(request):
 
 def about(request):
     return render(request, 'reservas/about.html')
+
+@login_required
+def edit_profile(request):
+    # Asegurarse de que el perfil del usuario existe, y si no, crearlo
+    profile, created = UserProfile.objects.get_or_create(user=request.user)
+
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()  # Guarda el perfil con la foto actualizada
+            return redirect('profile')  # Redirigir a la vista de perfil después de guardar
+    else:
+        form = UserProfileForm(instance=profile)
+
+    return render(request, 'reservas/edit_profile.html', {'form': form})

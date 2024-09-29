@@ -18,6 +18,9 @@ from django.contrib import admin
 from django.urls import path
 from reservas import views
 from django.contrib.auth.views import LogoutView
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -39,4 +42,8 @@ urlpatterns = [
     path("profile/", views.profile, name="profile"),
     path("logout/", LogoutView.as_view(), name="logout"),
     path("about/", views.about, name="about"),
+    path('profile/edit/', views.edit_profile, name='edit_profile'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
