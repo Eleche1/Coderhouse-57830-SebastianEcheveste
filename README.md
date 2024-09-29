@@ -10,5 +10,6 @@ El sistema debe permitir dar de alta y la administración de los clientes, asi c
 Para realizar el mismo se utilizó como soporte CHAT GPT (versión gratuita) para la mejora del codigo HTML, asi como para la identificación y corrección del codigo en general.
 
 Como mejoras al sistema, se plantea a futuro agregar una funcionalidad por la cual el sistema directamente los horarios que ya estan ocupados y agregar un punto que ayude a la gestion del cobro de las mismas.
+Agregaría tambien ayudas para navegar y filtrar la lista de reservas (por ejemplo una barra para desplazarse mas rápido y que los títulos de las columnas no se muevan)
 
 Tambien identificar a clientes que reiteradamente hagan reservas y no se presenten luego, levantando una alerta al usuario en esos casos (por medio de un mensaje antes de guardar la reserva)
