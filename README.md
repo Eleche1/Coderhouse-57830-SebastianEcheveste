@@ -1,6 +1,8 @@
 # Coderhouse-57830-SebastianEcheveste
 Trabajo final Curso Python Coderhouse
 
+LINK AL VIDEO: https://www.youtube.com/watch?v=F_BqCNwBIsQ
+
 LINKEDIN: https://www.linkedin.com/in/sebasti%C3%A1n-echeveste-a9059118b/
 
 Este proyecto está basado en la creación de un sistema simple para administrar las reservas de un complejo deportivo que se dedica al alquiler de canchas de futbol 5 y Pádel. 
